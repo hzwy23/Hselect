@@ -1,23 +1,41 @@
 这个JS文件是对select标签的一个扩展，使得select能够支持树形下拉框
 
+依赖关系：
+   使用这段js代码之前，请先引入jQuery库。
+
 1. 使用示例代码：
 
 	$.getJSON("/api/data/jsonType",function(data){
+
 		var arr = new Array();
+
 	    $(data).each(function(index,element){
+
 	        var ijs = {};
+
 	        ijs.id = element.Busiz_id
+
 	        ijs.text = element.Busiz_desc
+
 	        ijs.upId = element.Busiz_up_id
+
 	        arr.push(ijs)
-	                 
+
+	          
 	    });
+
 	    $("#SelectId").Hselect({
+
 	        data:arr,
+
 	        height:"29px",
+
 	        border:"#ccc solid 1px"
+
 	    });
+
 	}
+	
 
 2.可供修改的参数：
     #待显示数据
