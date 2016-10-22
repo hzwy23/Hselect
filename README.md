@@ -6,7 +6,9 @@
 1. 使用示例代码：
 
 
+
 	$.getJSON("/api/data/jsonType",function(data){
+
 		var arr = new Array();
 
 	    $(data).each(function(index,element){
@@ -33,7 +35,9 @@
 	        border:"#ccc solid 1px"
 
 	    });
+	    
 	}
+
 
 
 2.可供修改的参数：
