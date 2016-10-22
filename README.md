@@ -1,12 +1,12 @@
 这个JS文件是对select标签的一个扩展，使得select能够支持树形下拉框
 
-依赖关系：
+### 1.依赖关系：
    使用这段js代码之前，请先引入jQuery库。
 
-1. 使用示例代码：
 
+### 2.使用示例代码：
 
-
+```javascript
 	$.getJSON("/api/data/jsonType",function(data){
 
 		var arr = new Array();
@@ -35,12 +35,13 @@
 	        border:"#ccc solid 1px"
 
 	    });
-	    
+
 	}
+```
 
 
-
-2.可供修改的参数：
+### 3.可供修改的参数：
+```
     #待显示数据
 	data: "",
 
@@ -77,5 +78,5 @@
 
     #下边这个参数，是树形下拉框中，隐藏或展示图标的颜色。
     iconColor:"#ff5763",
-
+```
 
