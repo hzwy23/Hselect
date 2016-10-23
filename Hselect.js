@@ -5,28 +5,36 @@
     $.fn.Hselect = function(param){
         var sel = this
         var obj = document.createElement("div")
-        $(obj).css("padding","0")
-        $(obj).css("margin","0")
-        $(obj).css("border","none")
-        $(obj).css("outline","none")
+        $(obj).css({
+            "padding":"0",
+            "margin":"0",
+            "border":"none",
+            "outline":"none",
+            "text-align":"left",
+            "position":"relative"
+        })
 
         var __DEFAULT = {
             data: "",
             height:"26px",
             width:"auto",
-            border:"#000 solid 1px",
+            border:"#ccc solid 1px",
             fontSize:"13px",
             borderRadius:"5px",
             bgColor:"white",
 
             showLiHeight:"30px",
             showHeight:"230px",
-            showBorder:"#31708f solid 1px",
+            showBorder:"",
             showFontSize:"14px",
             iconColor:"#ff5763",
         }
 
         $.extend(true,__DEFAULT,param);
+
+        if (__DEFAULT.showBorder==""){
+            __DEFAULT.showBorder = __DEFAULT.border
+        }
 
         /*
          * This function sort array.
@@ -141,17 +149,25 @@
             var nextDept = $(nextObj).attr("data-dept")
             var nextDisplay = $(nextObj).css("display")
             if (nextDisplay == "none" && parseInt(nextDept)>parseInt(dept)){
-                $(e).find("i").css("border-color",topBorderColor)
-                $(e).find("i").css("border-width","6px 5px 0px 5px")
+                $(e).find("i").css({
+                    "border-color":topBorderColor,
+                    "border-width":"6px 5px 0px 5px"
+                })
 
                 $(e).nextAll().each(function(index,element){
                     if (parseInt(dept)+1==parseInt($(element).attr("data-dept"))){
-                        $(element).find("i").css("border-color",leftBorderColor)
-                        $(element).find("i").css("border-width","5px 0px 5px 6px")
+                        $(element).find("i").css({
+                            "border-color":leftBorderColor,
+                            "border-width":"5px 0px 5px 6px",
+                        });
+
                         $(element).show();
                     }else if (parseInt(dept)+1 < parseInt($(element).attr("data-dept"))){
-                        $(element).find("i").css("border-color",leftBorderColor)
-                        $(element).find("i").css("border-width","5px 0px 5px 6px")
+                        $(element).find("i").css({
+                            "border-color":leftBorderColor,
+                            "border-width":"5px 0px 5px 6px",
+                        })
+
                         $(element).hide();
                     }else{
                         return false
@@ -161,13 +177,18 @@
                 return
             }else if (nextDisplay != "none" && parseInt(nextDept)>parseInt(dept)){
 
-                $(e).find("i").css("border-color",leftBorderColor)
-                $(e).find("i").css("border-width","5px 0px 5px 6px")
+                $(e).find("i").css({
+                    "border-color":leftBorderColor,
+                    "border-width":"5px 0px 5px 6px",
+                })
 
                 $(e).nextAll().each(function(index,element){
                     if (parseInt(dept)<parseInt($(element).attr("data-dept"))){
-                        $(element).find("i").css("border-color",leftBorderColor)
-                        $(element).find("i").css("border-width","5px 0px 5px 6px")
+                        $(element).find("i").css({
+                            "border-color":leftBorderColor,
+                            "border-width":"5px 0px 5px 6px",
+                        })
+
                         $(element).hide();
                     }else if (parseInt(dept)>=parseInt($(element).attr("data-dept"))){
                         return false

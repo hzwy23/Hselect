@@ -70,8 +70,8 @@
     #下边这个参数，是树形下拉框的最大高度
     showHeight:"230px",
 
-    #下边这个参数，是树形下拉框中，边框属性
-    showBorder:"#31708f solid 1px",
+    #下边这个参数，是树形下拉框中，边框属性,默认情况下与上边border属性一致
+    showBorder:"",
 
     #下边这个参数，是树形下拉框中，字体大小
     showFontSize:"14px",
