@@ -22,6 +22,7 @@
             fontSize:"13px",
             borderRadius:"5px",
             bgColor:"white",
+            placeholder:"--请选择--",
 
             showLiHeight:"30px",
             showHeight:"230px",
@@ -98,7 +99,7 @@
         function genTreeUI(a){
             var odivStyle='background-color: '+__DEFAULT.bgColor+';padding:0px;text-align: left !important;width: '+__DEFAULT.width+'; border:'+__DEFAULT.border+'; height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+'; padding-left: 10px;border-radius:'+__DEFAULT.borderRadius+''
             var odiv = '<div class="HshowSelectValue" style="'+odivStyle+'">' +
-                '<span style="height: '+__DEFAULT.height+'; font-size: '+__DEFAULT.fontSize+'">--请选择--</span>' +
+                '<span style="height: '+__DEFAULT.height+'; font-size: '+__DEFAULT.fontSize+'">'+__DEFAULT.placeholder+'</span>' +
                 '<hzw style="position: relative;width: 20px; float: right;height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+';">' +
                 '<i style="border-color:#888 transparent transparent transparent;border-style: solid;border-width: 5px 4px 0px 4px;height: 0;left: 50%;margin-left: -4px;margin-top:-3px ;position: absolute;top: 50%;width: 0;"></i>' +
                 '</hzw></div>'
@@ -210,9 +211,8 @@
         //when select was change
         //change show values
         $(sel).on('change',function(){
-            window.event.cancelBubble = true;
+            //window.event.cancelBubble = true;
             var text = $(this).find("option:selected").text()
-            console.log(text)
             $(obj).find(".HshowSelectValue span").html(text)
         })
 
