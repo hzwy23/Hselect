@@ -5,6 +5,10 @@
     $.fn.Hselect = function(param){
         var sel = this
         var obj = document.createElement("div")
+        $(obj).css("padding","0")
+        $(obj).css("margin","0")
+        $(obj).css("border","none")
+        $(obj).css("outline","none")
 
         var __DEFAULT = {
             data: "",
@@ -90,7 +94,7 @@
                 '<hzw style="position: relative;width: 20px; float: right;height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+';">' +
                 '<i style="border-color:#888 transparent transparent transparent;border-style: solid;border-width: 5px 4px 0px 4px;height: 0;left: 50%;margin-left: -4px;margin-top:-3px ;position: absolute;top: 50%;width: 0;"></i>' +
                 '</hzw></div>'
-            odiv+='<div class="HselectShowAreaHuangZhanWei" style="background-color: #fefefe;border: '+__DEFAULT.showBorder+';display: none;margin-top: -1px; position: fixed;z-index:9999">' +
+            odiv+='<div class="HselectShowAreaHuangZhanWei" style="background-color: #fefefe;border: '+__DEFAULT.showBorder+';display: none; border-radius: 3px ;position: fixed;z-index:9999">' +
                 '<input style="margin:5px 5px;height:'+__DEFAULT.showLiHeight+';"/>'
             var opt = odiv+'<ul style="z-index: 9999;padding: 0px;list-style: none;' +
                 'max-height:'+__DEFAULT.showHeight+';' +
