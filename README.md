@@ -32,7 +32,7 @@
 
 	        height:"29px",
 
-	        border:"#ccc solid 1px"
+	        border:"#ccc solid 1px",
 
 	    });
 
@@ -78,5 +78,8 @@
 
     #下边这个参数，是树形下拉框中，隐藏或展示图标的颜色。
     iconColor:"#ff5763",
+
+	#当下拉框有选项被选中时触发的函数.请传入一个function,否则无意义.
+    onChange:"",
 ```
 

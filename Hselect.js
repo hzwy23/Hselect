@@ -29,6 +29,9 @@
             showBorder:"",
             showFontSize:"14px",
             iconColor:"#ff5763",
+
+
+            onChange:"",
         }
 
         $.extend(true,__DEFAULT,param);
@@ -211,6 +214,7 @@
         //when select was change
         //change show values
         $(sel).on('change',function(){
+
             //window.event.cancelBubble = true;
             var text = $(this).find("option:selected").text()
             $(obj).find(".HshowSelectValue span").html(text)
@@ -263,6 +267,7 @@
 
         $(obj).find("li").on('click',function(){
             window.event.cancelBubble = true;
+
             var text = $(this).find("span").html();
             var id = $(this).attr("data-id")
             $(sel).val(id)
@@ -271,6 +276,10 @@
 
             $(obj).find(".HshowSelectValue i").css("border-color","#888 transparent transparent transparent")
             $(obj).find(".HshowSelectValue i").css("border-width","5px 4px 0px 4px")
+
+            if (typeof __DEFAULT.onChange == "function"){
+                __DEFAULT.onChange();
+            }
         })
 
         $(obj).find("ul").on('mousewheel',function(){
@@ -326,4 +335,4 @@
             $(obj).find(".HshowSelectValue i").css("border-width","5px 4px 0px 4px")
         })
     }
-}(jQuery))
+}(jQuery));
