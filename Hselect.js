@@ -5,6 +5,9 @@
     $.fn.Hselect = function(param){
         var sel = this
         var obj = document.createElement("div")
+
+        //init div css
+        //get parent class to it
         $(obj).css({
             "padding":"0",
             "margin":"0",
@@ -14,6 +17,7 @@
             "position":"relative"
         }).addClass($(sel).attr("class"))
 
+        // default parameters
         var __DEFAULT = {
             data: "",
             height:"26px",
@@ -30,12 +34,12 @@
             showFontSize:"14px",
             iconColor:"#ff5763",
 
-
             onChange:"",
         }
 
         $.extend(true,__DEFAULT,param);
 
+        // set showBorder to border style
         if (__DEFAULT.showBorder==""){
             __DEFAULT.showBorder = __DEFAULT.border
         }
@@ -46,9 +50,19 @@
          * */
         function sortTree(a){
 
+            // load result sorted
             var list = [];
 
-            if (a.length==0){
+            // get select's options
+            // append it to new select which simulate by ul li
+            if (Object.prototype.toString.call(a) == '[object Array]'){
+                $(sel).find("option").each(function(index,element){
+                    var ijs = {}
+                    ijs.id = $(element).val();
+                    ijs.text = $(element).text()
+                    a.push(ijs)
+                })
+            } else {
                 $(sel).find("option").each(function(index,element){
                     var ijs = {}
                     ijs.id = $(element).val();
@@ -82,7 +96,7 @@
 
             function traversed(node,arr){
                 if (++INDEX > MAXDEPT){
-                    console.log("递归超过10层,为保护计算机,退出递归");
+                    console.log("递归超过8层,为保护计算机,退出递归");
                     return
                 }
                 for (var i = 0; i < arr.length; i++){
@@ -159,6 +173,7 @@
         }
 
         function showOrHide(e){
+
             var topBorderColor = __DEFAULT.iconColor+' transparent transparent transparent'
             var leftBorderColor = 'transparent transparent transparent '+__DEFAULT.iconColor
             var dept = $(e).attr("data-dept")
@@ -215,8 +230,8 @@
                 return
             }
         }
-        var list = sortTree(__DEFAULT.data)
-        var ui = genTreeUI(list)
+
+        var ui = genTreeUI(sortTree(__DEFAULT.data))
         initSelect(sel,__DEFAULT.data)
 
         $(obj).html(ui)
@@ -271,11 +286,18 @@
 
         $(obj).find("li").on('mouseover',function(){
             window.event.cancelBubble = true;
+
             var ul = $(this).closest("ul")
-            $(ul).find("li").css("background-color","")
-            $(ul).find("li").css("color","")
-            $(this).css("background-color","#6699CC")
-            $(this).css("color","white")
+
+            $(ul).find("li").css({
+                "background-color":"",
+                "color":""
+            })
+
+            $(this).css({
+                "background-color":"#6699CC",
+                "color":"white"
+            })
         })
 
         $(obj).find("li").on('click',function(){
@@ -286,6 +308,9 @@
             $(sel).val(id)
             $(this).closest("div").prev().find("span").html(text)
             $(this).closest("div").hide();
+            $("body").find(".Hzwy23FillBodyForSelectItems").animate({height:'0px'},500,function(){
+                $(this).remove()
+            })
 
             $(obj).find(".HshowSelectValue i").css({
                 "border-color":"#888 transparent transparent transparent",
@@ -336,20 +361,18 @@
 
         $(obj).find(".HshowSelectValue").on('click',function(){
             var showUiStatus = $(obj).find(".HselectShowAreaHuangZhanWei").css("display")
+            window.event.cancelBubble = true;
             if (showUiStatus == "none"){
-
                 $(".HselectShowAreaHuangZhanWei").hide()
                 $(".HshowSelectValue i").css({
                     "border-color":"#888 transparent transparent transparent",
                     "border-width":"5px 4px 0px 4px",
                 })
-
-
                 var w = $(obj).width()
                 $(obj).find(".HselectShowAreaHuangZhanWei").css("min-width",w)
                 $(obj).find(".HselectShowAreaHuangZhanWei input").css("min-width",w-12)
 
-                window.event.cancelBubble = true;
+
                 var nextObj = $(this).next()
                 $(nextObj).find("input").val("")
                 $(nextObj).show();
@@ -364,19 +387,42 @@
                 var ptop = $(obj).offset().top
                 var pleft = $(obj).offset().left;
                 var tp = ptop+$(this).height()
-                $(obj).find(".HselectShowAreaHuangZhanWei").offset({top:tp,left:pleft})
+                var ulHeight = $(nextObj).height()
+                if (tp+ulHeight > document.body.scrollHeight){
+                    var addHeight = tp+ulHeight+30 - document.body.scrollHeight
+                    var appdiv = document.createElement("div")
+                    $(appdiv).css("height",addHeight).addClass("Hzwy23FillBodyForSelectItems")
+                    $("body").append(appdiv)
+                    var st = $("body").scrollTop();
+                    $("body").animate({scrollTop:st+addHeight},500)
+                }
+                $(obj).find(".HselectShowAreaHuangZhanWei").offset({
+                    top:tp,
+                    left:pleft
+                })
 
             }else{
                 $(obj).find("li").closest("div").hide();
-                $(obj).find(".HshowSelectValue i").css("border-color","#888 transparent transparent transparent")
-                $(obj).find(".HshowSelectValue i").css("border-width","5px 4px 0px 4px")
+                $(obj).find(".HshowSelectValue i").css({
+                    "border-color":"#888 transparent transparent transparent",
+                    "border-width":"5px 4px 0px 4px"
+                })
+
+                $("body").find(".Hzwy23FillBodyForSelectItems").animate({height:'0px'},500,function(){
+                    $(this).remove()
+                })
             }
         })
 
         $(document).on('click',function(){
             $(obj).find("li").closest("div").hide();
-            $(obj).find(".HshowSelectValue i").css("border-color","#888 transparent transparent transparent")
-            $(obj).find(".HshowSelectValue i").css("border-width","5px 4px 0px 4px")
+            $(obj).find(".HshowSelectValue i").css({
+                "border-color":"#888 transparent transparent transparent",
+                "border-width":"5px 4px 0px 4px"
+            })
+            $("body").find(".Hzwy23FillBodyForSelectItems").animate({height:'0px'},500,function(){
+                $(this).remove()
+            })
         })
     }
 }(jQuery));
