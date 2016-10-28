@@ -100,7 +100,7 @@
         }
 
         function genTreeUI(a){
-            var odivStyle='background-color: '+__DEFAULT.bgColor+';padding:0px;text-align: left !important;width: '+__DEFAULT.width+'; border:'+__DEFAULT.border+'; height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+'; padding-left: 10px;border-radius:'+__DEFAULT.borderRadius+''
+            var odivStyle='cursor:pointer;background-color: '+__DEFAULT.bgColor+';padding:0px;text-align: left !important;width: '+__DEFAULT.width+'; border:'+__DEFAULT.border+'; height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+'; padding-left: 10px;border-radius:'+__DEFAULT.borderRadius+''
             var odiv = '<div class="HshowSelectValue" style="'+odivStyle+'">' +
                 '<span style="height: '+__DEFAULT.height+'; font-size: '+__DEFAULT.fontSize+'">'+__DEFAULT.placeholder+'</span>' +
                 '<hzw style="position: relative;width: 20px; float: right;height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+';">' +
