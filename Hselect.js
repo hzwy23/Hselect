@@ -12,7 +12,7 @@
             "outline":"none",
             "text-align":"left",
             "position":"relative"
-        })
+        }).addClass($(sel).attr("class"))
 
         var __DEFAULT = {
             data: "",
@@ -47,6 +47,16 @@
         function sortTree(a){
 
             var list = [];
+
+            if (a.length==0){
+                $(sel).find("option").each(function(index,element){
+                    var ijs = {}
+                    ijs.id = $(element).val();
+                    ijs.text = $(element).text()
+                    list.push(ijs)
+                })
+                return list
+            }
 
             //set max dept val
             var MAXDEPT = 8;
@@ -106,14 +116,17 @@
                 '<hzw style="position: relative;width: 20px; float: right;height: '+__DEFAULT.height+'; line-height: '+__DEFAULT.height+';">' +
                 '<i style="border-color:#888 transparent transparent transparent;border-style: solid;border-width: 5px 4px 0px 4px;height: 0;left: 50%;margin-left: -4px;margin-top:-3px ;position: absolute;top: 50%;width: 0;"></i>' +
                 '</hzw></div>'
-            odiv+='<div class="HselectShowAreaHuangZhanWei" style="background-color: #fefefe;border: '+__DEFAULT.showBorder+';display: none; border-radius: 3px ;position: fixed;z-index:9999">' +
-                '<input style="margin:5px 5px;height:'+__DEFAULT.showLiHeight+';"/>'
+            odiv+='<div class="HselectShowAreaHuangZhanWei" style="white-space:nowrap;background-color: #fefefe;border: '+__DEFAULT.showBorder+';display: none; border-radius: 3px ;position: fixed;z-index:9999">' +
+                '<input style="border:#6699CC solid 1px; padding-left:5px;margin:5px 5px;height:'+__DEFAULT.showLiHeight+';"/>'
             var opt = odiv+'<ul style="z-index: 9999;padding: 0px;list-style: none;' +
                 'max-height:'+__DEFAULT.showHeight+';' +
                 'overflow: auto;' +
                 '">'
             for(var i = 0; i < a.length; i++){
-                var pd = parseInt(a[i].dept)*20
+                var pd = parseInt(a[i].dept)*20 - 10
+                if (isNaN(pd)){
+                    pd = 15
+                }
                 var li = '<li data-id="'+a[i].id+'" data-dept="'+a[i].dept+'" style="text-align: left;font-weight:500;padding-left:'+pd+'px; height:'+__DEFAULT.showLiHeight+'; line-height: '+__DEFAULT.showLiHeight+'; font-size: '+__DEFAULT.showFontSize+'; cursor: pointer;position: relative;">' +
                     '<hzw class="HshowOrHideIconHzw" style="height: '+__DEFAULT.showLiHeight+'; line-height: '+__DEFAULT.showLiHeight+'; width: 20px;cursor: cell;display: inline-block">' +
                     '<i style="border-color:'+__DEFAULT.iconColor+' transparent transparent transparent;border-style: solid;border-width: 6px 5px 0px 5px;height: 0;margin-left: 1px;margin-top: -5px;position: absolute;top: 50%;width: 0;"></i>' +
@@ -141,7 +154,7 @@
             for (var i = 0; i < arr.length; i++){
                 optHtml+='<option value="'+arr[i].id+'">'+arr[i].text+'</option>'
             }
-            $(selObj).html(optHtml)
+            $(selObj).append(optHtml)
             $(selObj).hide()
         }
 
@@ -274,8 +287,10 @@
             $(this).closest("div").prev().find("span").html(text)
             $(this).closest("div").hide();
 
-            $(obj).find(".HshowSelectValue i").css("border-color","#888 transparent transparent transparent")
-            $(obj).find(".HshowSelectValue i").css("border-width","5px 4px 0px 4px")
+            $(obj).find(".HshowSelectValue i").css({
+                "border-color":"#888 transparent transparent transparent",
+                "border-width":"5px 4px 0px 4px"
+            })
 
             if (typeof __DEFAULT.onChange == "function"){
                 __DEFAULT.onChange();
@@ -287,6 +302,29 @@
         })
 
         $("div").scroll(function() {
+            window.event.cancelable = true;
+            var showUiStatus = $(obj).find(".HselectShowAreaHuangZhanWei").css("display")
+            if (showUiStatus != "none"){
+                var ptop = $(obj).offset().top
+                var pleft = $(obj).offset().left;
+                var tp = ptop+$(obj).find(".HshowSelectValue").height()
+                $(obj).find(".HselectShowAreaHuangZhanWei").offset({top:tp,left:pleft})
+            }
+        });
+
+        $(document).scroll(function() {
+            window.event.cancelable = true;
+            var showUiStatus = $(obj).find(".HselectShowAreaHuangZhanWei").css("display")
+            if (showUiStatus != "none"){
+                var ptop = $(obj).offset().top
+                var pleft = $(obj).offset().left;
+                var tp = ptop+$(obj).find(".HshowSelectValue").height()
+                $(obj).find(".HselectShowAreaHuangZhanWei").offset({top:tp,left:pleft})
+            }
+        });
+
+        $("body").scroll(function() {
+            window.event.cancelable = true;
             var showUiStatus = $(obj).find(".HselectShowAreaHuangZhanWei").css("display")
             if (showUiStatus != "none"){
                 var ptop = $(obj).offset().top
@@ -301,12 +339,15 @@
             if (showUiStatus == "none"){
 
                 $(".HselectShowAreaHuangZhanWei").hide()
-                $(".HshowSelectValue i").css("border-color","#888 transparent transparent transparent")
-                $(".HshowSelectValue i").css("border-width","5px 4px 0px 4px")
+                $(".HshowSelectValue i").css({
+                    "border-color":"#888 transparent transparent transparent",
+                    "border-width":"5px 4px 0px 4px",
+                })
+
 
                 var w = $(obj).width()
-                $(obj).find(".HselectShowAreaHuangZhanWei").css("width",w)
-                $(obj).find(".HselectShowAreaHuangZhanWei input").css("width",w-12)
+                $(obj).find(".HselectShowAreaHuangZhanWei").css("min-width",w)
+                $(obj).find(".HselectShowAreaHuangZhanWei input").css("min-width",w-12)
 
                 window.event.cancelBubble = true;
                 var nextObj = $(this).next()
@@ -314,8 +355,11 @@
                 $(nextObj).show();
                 $(nextObj).find("input").focus();
                 $(nextObj).find("ul").scrollTop(0);
-                $(obj).find(".HshowSelectValue i").css("border-color","transparent transparent #888 transparent")
-                $(obj).find(".HshowSelectValue i").css("border-width","0px 4px 5px 4px")
+                $(nextObj).find("ul").scrollLeft(0);
+                $(obj).find(".HshowSelectValue i").css({
+                    "border-color":"transparent transparent #888 transparent",
+                    "border-width":"0px 4px 5px 4px"
+                })
 
                 var ptop = $(obj).offset().top
                 var pleft = $(obj).offset().left;
