@@ -132,16 +132,16 @@
                 '</hzw></div>'
             odiv+='<div class="HselectShowAreaHuangZhanWei" style="white-space:nowrap;background-color: #fefefe;border: '+__DEFAULT.showBorder+';display: none; border-radius: 3px ;position: fixed;z-index:9999">' +
                 '<input style="border:#6699CC solid 1px; padding-left:5px;margin:5px 5px;height:'+__DEFAULT.showLiHeight+';"/>'
-            var opt = odiv+'<ul style="z-index: 9999;padding: 0px;list-style: none;' +
+            var opt = odiv+'<ul style="z-index: 9999;padding: 0px;list-style: none;margin:0px;' +
                 'max-height:'+__DEFAULT.showHeight+';' +
                 'overflow: auto;' +
                 '">'
             for(var i = 0; i < a.length; i++){
                 var pd = parseInt(a[i].dept)*20 - 10
                 if (isNaN(pd)){
-                    pd = 15
+                    pd = 10
                 }
-                var li = '<li data-id="'+a[i].id+'" data-dept="'+a[i].dept+'" style="text-align: left;font-weight:500;padding-left:'+pd+'px; height:'+__DEFAULT.showLiHeight+'; line-height: '+__DEFAULT.showLiHeight+'; font-size: '+__DEFAULT.showFontSize+'; cursor: pointer;position: relative;">' +
+                var li = '<li data-id="'+a[i].id+'" data-dept="'+a[i].dept+'" style="margin:0px; text-align: left;font-weight:500;padding-left:'+pd+'px; height:'+__DEFAULT.showLiHeight+'; line-height: '+__DEFAULT.showLiHeight+'; font-size: '+__DEFAULT.showFontSize+'; cursor: pointer;position: relative;">' +
                     '<hzw class="HshowOrHideIconHzw" style="height: '+__DEFAULT.showLiHeight+'; line-height: '+__DEFAULT.showLiHeight+'; width: 20px;cursor: cell;display: inline-block">' +
                     '<i style="border-color:'+__DEFAULT.iconColor+' transparent transparent transparent;border-style: solid;border-width: 6px 5px 0px 5px;height: 0;margin-left: 1px;margin-top: -5px;position: absolute;top: 50%;width: 0;"></i>' +
                     '</hzw>' +
@@ -173,7 +173,6 @@
         }
 
         function showOrHide(e){
-
             var topBorderColor = __DEFAULT.iconColor+' transparent transparent transparent'
             var leftBorderColor = 'transparent transparent transparent '+__DEFAULT.iconColor
             var dept = $(e).attr("data-dept")
@@ -426,3 +425,4 @@
         })
     }
 }(jQuery));
+
